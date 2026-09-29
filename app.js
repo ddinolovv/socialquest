@@ -445,9 +445,15 @@ function annotatePostDetails(){
 }
 new MutationObserver(annotatePostDetails).observe(document.body,{childList:true,subtree:true});
 document.addEventListener('click',event=>{
-  const postNode=event.target.closest('.post[data-post-id]');
-  if(!postNode?.dataset.postId||event.target.closest('button,a,video,input,textarea,select,label'))return;
-  location.href=`post.html?id=${encodeURIComponent(postNode.dataset.postId)}`;
+  const postNode=event.target.closest('.post');
+  if(!postNode||event.target.closest('button,a,video,input,textarea,select,label'))return;
+  let postId=postNode.dataset.postId;
+  if(!postId){
+    const feedIndex=[...document.querySelectorAll('#feedPosts .post')].indexOf(postNode);
+    const profileIndex=[...document.querySelectorAll('.profile-post-items .post')].indexOf(postNode);
+    postId=feedIndex>-1?posts[feedIndex]?.id:profileIndex>-1?profilePostState.items?.[profileIndex]?.id:'';
+  }
+  if(postId)location.href=`post.html?id=${encodeURIComponent(postId)}`;
 });
 
 if ('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js'));
