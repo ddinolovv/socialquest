@@ -439,4 +439,15 @@ if(postMediaInput){
   },true);
 }
 
+function annotatePostDetails(){
+  document.querySelectorAll('#feedPosts .post').forEach((node,index)=>{node.dataset.postId=posts[index]?.id||'';});
+  document.querySelectorAll('.profile-post-items .post').forEach((node,index)=>{node.dataset.postId=profilePostState.items?.[index]?.id||'';});
+}
+new MutationObserver(annotatePostDetails).observe(document.body,{childList:true,subtree:true});
+document.addEventListener('click',event=>{
+  const postNode=event.target.closest('.post[data-post-id]');
+  if(!postNode?.dataset.postId||event.target.closest('button,a,video,input,textarea,select,label'))return;
+  location.href=`post.html?id=${encodeURIComponent(postNode.dataset.postId)}`;
+});
+
 if ('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js'));
