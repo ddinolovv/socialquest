@@ -2,6 +2,7 @@ const sqSupabase = window.supabase.createClient(
   'https://tbvdrfgnvdarutapvqjl.supabase.co',
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRidmRyZmdudmRhcnV0YXB2cWpsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA2NjUyNDYsImV4cCI6MjEwNjI0MTI0Nn0.Dp2d-N2xWSXwqAWhiQVmspxpSYJPyX25tq1rj5JaHCw'
 );
+document.querySelector('.demo-note')?.replaceChildren('Secure accounts powered by Supabase.');
 
 let quests = [
   { icon: '💬', title: 'Voice of the community', text: 'Leave 2 helpful comments', xp: 50, progress: '0 / 2' },
